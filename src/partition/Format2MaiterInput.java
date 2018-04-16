@@ -102,16 +102,17 @@ public class Format2MaiterInput {
 
 	public static void main(String[] args) throws IOException {
 
-		String method = "fennel";
-		String weightmethod = "no";
+		String method = "neighbor";
+		String weightmethod = "InDeg";
+		//note whether the graph is weight
+		boolean isWeight = false;
 
 		String input = "/home/gongsf/program/graphPartition/dataSet/Google_90w/"
-				+ method + "/" + method	+ "_vertex_weight_"	+ weightmethod	+ "_result/weight/vertex";
+				+ method + "/" + method	+ "_vertex_weight_"	+ weightmethod	+ "_result/weight_no/vertex";
 		String output = "/home/gongsf/program/graphPartition/dataSet/Google_90w/"
-				+ method + "/" + method	+ "_vertex_weight_"	+ weightmethod	+ "_result/weight/part";
+				+ method + "/" + method	+ "_vertex_weight_"	+ weightmethod	+ "_result/weight_no/part";
 		int partNum = 4;
 		int pointNum = 916428;
-		boolean isWeight = true;
 
 		for (int i = 0; i < args.length; i++) {
 			if (args[i].equals("-in")) {

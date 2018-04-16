@@ -9,16 +9,18 @@ import java.io.IOException;
 public class PartFromInfo {
 
 	public static void main(String[] args) throws IOException {
-		
-		String method = "fennel";
+
+		String method = "neighbor";
+		int partNum = 4;
+		String weightMethod = "InDeg";
+		//note whether the graph is weight graph
 
 		String partInfo = "/home/gongsf/program/graphPartition/dataSet/Google_90w/"
-				+ method +"/"+ method  +"_vertex_weight_InDeg_partInfo.4";
+				+ method + "/" + method + "_vertex_weight_" + weightMethod + "_partInfo." + partNum;
 		String originalData = "/home/gongsf/program/graphPartition/dataSet/Google_90w/"
-				+ "original_data_weight.txt";
+				+ "original_data.txt";
 		String output = "/home/gongsf/program/graphPartition/dataSet/Google_90w/"
-				+ method +"/"+ method + "_vertex_weight_InDeg_result/weight/vertex";
-		int partNum = 4;
+				+ method + "/" + method + "_vertex_weight_" + weightMethod + "_result/weight_no/vertex";
 
 		BufferedReader brmo = new BufferedReader(new FileReader(partInfo));
 		BufferedReader bror = new BufferedReader(new FileReader(originalData));

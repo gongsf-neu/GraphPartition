@@ -10,7 +10,7 @@ import java.text.DecimalFormat;
 import java.util.Random;
 import java.util.StringTokenizer;
 
-public class Graph2WeightGraph {
+public class Graph2EdgeWeightGraph {
 	
 	public static void main(String[] args) throws IOException {
 		
@@ -30,7 +30,7 @@ public class Graph2WeightGraph {
 			StringTokenizer st = new StringTokenizer(line);
 			bw.write(st.nextToken() + "\t");
 			while(st.hasMoreTokens()){
-				bw.write(st.nextToken() + "," + df.format(Math.abs(random.nextDouble()) * max) + " ");
+				bw.write(st.nextToken() + "," + df.format(Math.abs(random.nextDouble()) * max+1) + " ");
 			}
 			bw.write("\n");
 		}

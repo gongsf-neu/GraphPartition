@@ -50,7 +50,6 @@ public class NeighborPartition {
 			if (args[i].equals("-partNum")) {
 				partNum = Integer.parseInt(args[++i]);
 			}
-
 		}
 
 		partInfo = new int[vertexNum];
@@ -93,72 +92,66 @@ public class NeighborPartition {
 		br.close();
 
 		averageCon = allCon / partNum;
+		
+		double accuCon = 0;
 
-		for (int i = 0; i < partNum; i++) {
+		int coreId = maxId;
+		for (int i = partNum-1; i > 0; i--) {
 			System.out.println(i + " partition is started");
 			double con = 0;
-			TIntDoubleHashMap candidates = new TIntDoubleHashMap();
-			HashSet<Integer> partSet = new HashSet<Integer>();
-			int coreId = maxId;
+			Candidates candidates = new Candidates();
+			candidates.insert(coreId);
+			
+			//while(con<averageCon)
 			for (int j = 0; con < averageCon; j++) {
-				if (j % 10000 == 0) {
-					System.out.println(con + " " + averageCon);
-				}
+//				if (j % 10000 == 0) {
+//					System.out.println(con + " " + averageCon);
+//					System.out.println(candidates.size);
+//				}
+//				candidates.checkLoop();
+				coreId = candidates.popAndInsert(vertices);
+//				candidates.checkLoop();
+//				System.out.println("candidates vertex id " + coreId);
 				WeightVertex v = vertices[coreId];
 				if (!v.isPart) {
-					partSet.add(coreId);
+					partInfo[v.id] = i;
 					v.isPart = true;
-					if (candidates.contains(coreId)) {
-						candidates.remove(coreId);
-					}
 					con += v.weight;
-
-					TIntDoubleIterator vitr = v.neighbor.iterator();
-					while (vitr.hasNext()) {
-						vitr.advance();
-						id = vitr.key();
-						if (!vertices[id].isPart) {
-							if (candidates.containsKey(id)) {
-								candidates.put(id,
-										candidates.get(id) + vitr.value());
-							} else {
-								candidates.put(id, vitr.value());
-							}
-						}
-					}
-
-				} else {
-					if (candidates.contains(coreId)) {
-						candidates.remove(coreId);
-					}
+				} else{
+					System.out.println("candidates return and partitioned vertex, error");
+					System.out.println(partInfo[coreId]);
+					System.exit(0);
 				}
-				coreId = getNextId(candidates, vertices);
 			}
-			System.out.println(i + " partition is finished");
+			accuCon += con;
+			System.out.println(i + " partition is finished with contribution : " + con);
+			coreId = getMaxId(vertices);
+			System.out.println(partInfo[coreId] + " " + coreId);
+			if(vertices[coreId].isPart){
+				System.out.println("maxId partitioned vertex, error");
+				System.out.println(partInfo[coreId] + " " + coreId);
+				System.exit(0);
+			}
 		}
+		
+		System.out.println("0 partition is finished with contribution : " + (allCon- accuCon));
 
 		BufferedWriter bw = new BufferedWriter(new FileWriter(output));
+		for(int i = 0; i < vertexNum; i++){
+			bw.write(partInfo[i] + "\n");
+		}
 		bw.close();
 
 	}
-
-	public static int getNextId(TIntDoubleHashMap candidates,
-			WeightVertex[] vertices) {
-		System.out.println(candidates.size());
-		double inCom = 0;
-		double outCom = 0;
-		double maxInCom = 0;
-		int maxInComId = -1;
-
-		TIntDoubleIterator citr = candidates.iterator();
-		while (citr.hasNext()) {
-			citr.advance();
-			inCom = citr.value();
-			outCom = vertices[citr.key()].nweight - inCom;
-			if (maxInCom > (inCom - outCom)) {
-				maxInComId = citr.key();
+	
+	public static int getMaxId(WeightVertex[] vertices){
+		int maxId = 0;
+		double maxWeight = vertices[0].weight;
+		for(WeightVertex vertex : vertices){
+			if(!vertex.isPart && vertex.weight > maxWeight){
+				maxId = vertex.id;
 			}
 		}
-		return maxInComId;
+		return maxId;
 	}
 }
