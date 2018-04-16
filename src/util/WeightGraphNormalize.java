@@ -13,11 +13,9 @@ public class WeightGraphNormalize {
 
 	public static void main(String[] args) throws IOException {
 
-		String input = "/home/gongsf/program/graphPartition/dataSet/Google_90w/"
-				+ "original_data_weight.txt";
-		String output = "/home/gongsf/program/graphPartition/dataSet/Google_90w/"
-				+ "original_data_weight_normal.txt";
-		int vertexNum = 916428;
+		String input = "/home/gongsf/program/graphPartition/dataSet/WiKi/vertex_edge_weight.txt";
+		String output = "/home/gongsf/program/graphPartition/dataSet/WiKi/vertex_edge_weight_normal.txt";
+		int vertexNum = 4206784;
 
 		double[] weightCount = new double[vertexNum];
 		String line = null;

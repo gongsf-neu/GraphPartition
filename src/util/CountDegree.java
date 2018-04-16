@@ -14,10 +14,10 @@ public class CountDegree {
 	public static void main(String[] args) throws IOException {
 
 		// the input is direct graph
-		String input = "/home/gongsf/program/graphPartition/dataSet/WiKi/vertex.txt";
-		String output = "/home/gongsf/program/graphPartition/dataSet/WiKi/vertex.txt.info";
+		String input = "/home/gongsf/program/graphPartition/dataSet/BerkStan/vertex.txt";
+		String output = "/home/gongsf/program/graphPartition/dataSet/BerkStan/vertex.txt.info";
 
-		int vertexNum = 4206784;
+		int vertexNum = 685230;
 		int partNum = 20;
 		int[] degrees;
 		int[] count = new int[partNum];

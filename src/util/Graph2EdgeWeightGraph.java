@@ -14,8 +14,8 @@ public class Graph2EdgeWeightGraph {
 	
 	public static void main(String[] args) throws IOException {
 		
-		String input = "/home/gongsf/program/graphPartition/dataSet/Google_90w/original_data.txt";
-		String output = "/home/gongsf/program/graphPartition/dataSet/Google_90w/original_data_weight.txt";
+		String input = "/home/gongsf/program/graphPartition/dataSet/WiKi/vertex.txt";
+		String output = "/home/gongsf/program/graphPartition/dataSet/WiKi/vertex_edge_weight.txt";
 		
 		BufferedReader br = new BufferedReader(new FileReader(input));
 		BufferedWriter bw = new BufferedWriter(new FileWriter(output));
