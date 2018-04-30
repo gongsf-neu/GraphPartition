@@ -123,10 +123,14 @@ public class Format2MaiterInput {
 				output = args[++i];
 			}
 
-			if (args[i].equals("-prt")) {
+			if (args[i].equals("-partNum")) {
 				partNum = Integer.parseInt(args[++i]);
 			}
-
+			
+			if(args[i].equals("-pointNum")){
+				pointNum = Integer.parseInt(args[++i]);
+			}
+			
 			if (args[i].equals("-w")) {
 				String sbool = args[++i];
 				if (sbool.equals("true")) {
@@ -147,5 +151,6 @@ public class Format2MaiterInput {
 		} else {
 			format.formatWithNoWeight();
 		}
+		System.out.println("format to Maiter input finish!!");
 	}
 }

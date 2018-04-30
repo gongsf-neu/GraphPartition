@@ -13,9 +13,9 @@ public class CountContribution {
 
 	public static void main(String[] args) throws IOException {
 
-		String input = "/home/gongsf/program/graphPartition/dataSet/WiKi/contribution_php";
-		String output = "/home/gongsf/program/graphPartition/dataSet/WiKi/contribution_php.info";
-		int vertexNum = 4206784;
+		String input = "/home/gongsf/program/graphPartition/dataSet/BerkStan/contribution_adsorption";
+		String output = "/home/gongsf/program/graphPartition/dataSet/BerkStan/contribution_adsorption.info";
+		int vertexNum = 685230;
 		double[] contributions;
 		int groupNum = 20;
 		int[] count;
@@ -48,12 +48,12 @@ public class CountContribution {
 		String line = null;
 		double contribution = 0;
 		while ((line = br.readLine()) != null) {
-			StringTokenizer st = new StringTokenizer(line);
-			id = Integer.parseInt(st.nextToken());
-			st.nextToken(); //skip value
-			contribution = Double.parseDouble(st.nextToken());
+			String[] ss = line.split("\\s+");
+			id = Integer.parseInt(ss[0]);
+			contribution = Double.parseDouble(ss[1]);
 			if(id >= vertexNum){
-				System.out.println(id);
+				System.out.println("the vertexNum more than the input vertexNum");
+				System.exit(0);
 			}
 			contributions[id] = contribution;
 			if (maxCont < contribution) {
@@ -79,6 +79,7 @@ public class CountContribution {
 		DecimalFormat df = new DecimalFormat("0.00");
 		BufferedWriter bw = new BufferedWriter(new FileWriter(output));
 		for (int i = 0; i < groupNum; i++) {
+			if(count[i] > 0)
 			bw.write(df.format(interval * i) + " -- "
 					+ df.format(interval * (i + 1)) + " : " + count[i] + "\n");
 		}

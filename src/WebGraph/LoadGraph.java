@@ -14,7 +14,7 @@ import java.util.Iterator;
 
 public class LoadGraph {
 	public static void main(String[] args) throws IOException {
-		directed("/home/gongsf/Desktop/PageRank/WiKi/enwiki-2013-hc");
+		directed("/home/gongsf/program/graphPartition/dataSet/enro/enron-hc");
 
 	}
 
@@ -23,7 +23,7 @@ public class LoadGraph {
 				.loadSequential(graphPath);
 		NodeIterator nodeIterator = immutableGraph.nodeIterator();
 		try (BufferedWriter writer = new BufferedWriter(new FileWriter(
-				graphPath + "/edge.txt"))) {
+				graphPath + "edge.txt"))) {
 			while (nodeIterator.hasNext()) {
 				int src = nodeIterator.next();
 				for (int dstInd = 0; dstInd < nodeIterator.outdegree(); dstInd++) {
@@ -35,7 +35,7 @@ public class LoadGraph {
 			}
 		}
 		try (BufferedWriter writer = new BufferedWriter(new FileWriter(
-				graphPath + "/node.txt"))) {
+				graphPath + "node.txt"))) {
 			for (int i = 0; i < immutableGraph.numNodes(); i++)
 				writer.write(i + "\n");
 		}
@@ -69,8 +69,8 @@ public class LoadGraph {
             }
 
         }
-        try (BufferedWriter edgeWriter = new BufferedWriter(new FileWriter(graphPath + "/edge_undirected.txt"))) {
-            try (BufferedWriter nodeWriter = new BufferedWriter(new FileWriter(graphPath + "/node.txt"))) {
+        try (BufferedWriter edgeWriter = new BufferedWriter(new FileWriter(graphPath + "edge_undirected.txt"))) {
+            try (BufferedWriter nodeWriter = new BufferedWriter(new FileWriter(graphPath + "node.txt"))) {
                 for (int src = 0; src < immutableGraph.numNodes(); src++) {
                     TIntHashSet dstList = srcDstListMap.get(src);
                     int finalSrc = src;

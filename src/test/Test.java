@@ -1,20 +1,18 @@
 package test;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class Test {
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		
-		DecimalFormat df = new DecimalFormat("0.00");
-		
-		System.out.println(df.format(1123.214));
-		
-		ArrayList<Integer> list = new ArrayList<Integer>();
-		list.add(10, 5);
-		for(int val : list){
-			System.out.println(val);
-		}
+		System.out.println(Math.log(Math.E));
 	}
 }

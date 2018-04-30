@@ -17,6 +17,15 @@ public class Graph2EdgeWeightGraph {
 		String input = "/home/gongsf/program/graphPartition/dataSet/WiKi/vertex.txt";
 		String output = "/home/gongsf/program/graphPartition/dataSet/WiKi/vertex_edge_weight.txt";
 		
+		for(int i = 0; i < args.length; i++){
+			if(args[i].equals("-in")){
+				input = args[++i];
+			}
+			if(args[i].equals("-out")){
+				output = args[++i];
+			}
+		}
+		
 		BufferedReader br = new BufferedReader(new FileReader(input));
 		BufferedWriter bw = new BufferedWriter(new FileWriter(output));
 		
@@ -37,6 +46,8 @@ public class Graph2EdgeWeightGraph {
 		
 		br.close();
 		bw.close();
+		
+		System.out.println("edge weight added!!!");
 	}
 
 }

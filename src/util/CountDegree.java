@@ -14,14 +14,12 @@ public class CountDegree {
 	public static void main(String[] args) throws IOException {
 
 		// the input is direct graph
-		String input = "/home/gongsf/program/graphPartition/dataSet/BerkStan/vertex.txt";
-		String output = "/home/gongsf/program/graphPartition/dataSet/BerkStan/vertex.txt.info";
+		String input = "/home/gongsf/program/graphPartition/dataSet/WiKi/vertex.txt";
+		String output = "/home/gongsf/program/graphPartition/dataSet/WiKi/vertex_degree_info";
 
-		int vertexNum = 685230;
-		int partNum = 20;
+		int vertexNum = 4206784;
+		int partNum = 10000;
 		int[] degrees;
-		int[] count = new int[partNum];
-		double interval = 1.0 / partNum;
 
 		for (int i = 0; i < args.length; i++) {
 			if (args[i].equals("-in")) {
@@ -48,39 +46,40 @@ public class CountDegree {
 			}
 		}
 		br.close();
-
-		int maxDegree = 0;
-		int maxIndex = 0;
-
-		for (int i = 0; i < vertexNum; i++) {
-			if (maxDegree < degrees[i]) {
-				maxDegree = degrees[i];
-				maxIndex = i;
-			}
-		}
-
-		System.out.println(maxDegree);
-
-		double tmp = 0;
-		int index = 0;
-		for (int i = 0; i < vertexNum; i++) {
-			if (degrees[i] == maxDegree) {
-				count[partNum - 1]++;
-			} else {
-				tmp = degrees[i]*1.0 / maxDegree;
-				index = (int) (tmp / interval);
-				count[index]++;
-			}
-		}
-
-		DecimalFormat df = new DecimalFormat("0.00");
+		
 		BufferedWriter bw = new BufferedWriter(new FileWriter(output));
-		for (int i = 0; i < partNum; i++) {
-			bw.write(df.format(interval * i) + " -- "
-					+ df.format(interval * (i + 1)) + " : " + count[i] + "\n");
+		for (int i = 0; i < vertexNum; i++) {
+			bw.write(i + " " + degrees[i] + "\n");
 		}
 		bw.close();
+		
+		System.out.println("count finished!!!");
 
+//		int maxDegree = 0;
+//		int maxIndex = 0;
+//
+//		for (int i = 0; i < vertexNum; i++) {
+//			if (maxDegree < degrees[i]) {
+//				maxDegree = degrees[i];
+//				maxIndex = i;
+//			}
+//		}
+//
+//		System.out.println(maxDegree);
+//
+//		double tmp = 0;
+//		int index = 0;
+//		for (int i = 0; i < vertexNum; i++) {
+//			if (degrees[i] == maxDegree) {
+//				count[partNum - 1]++;
+//			} else {
+//				tmp = degrees[i]*1.0 / maxDegree;
+//				index = (int) (tmp / interval);
+//				count[index]++;
+//			}
+//		}
+//
+//		DecimalFormat df = new DecimalFormat("0.00000");
 	}
 
 }

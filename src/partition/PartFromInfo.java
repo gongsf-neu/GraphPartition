@@ -22,6 +22,21 @@ public class PartFromInfo {
 		String output = "/home/gongsf/program/graphPartition/dataSet/Google_90w/"
 				+ method + "/" + method + "_vertex_weight_" + weightMethod + "_result/weight_no/vertex";
 
+		for(int i = 0; i < args.length; i++){
+			if(args[i].equals("-partInfo")){
+				partInfo = args[++i];
+			}
+			if(args[i].equals("-in")){
+				originalData = args[++i];
+			}
+			if(args[i].equals("-out")){
+				output = args[++i];
+			}
+			if(args[i].equals("-partNum")){
+				partNum = Integer.parseInt(args[++i]);
+			}
+		}
+		
 		BufferedReader brmo = new BufferedReader(new FileReader(partInfo));
 		BufferedReader bror = new BufferedReader(new FileReader(originalData));
 		BufferedWriter bw[] = new BufferedWriter[partNum];
@@ -41,5 +56,6 @@ public class PartFromInfo {
 		for (int i = 0; i < partNum; i++) {
 			bw[i].close();
 		}
+		System.out.println("part finish!!!");
 	}
 }
