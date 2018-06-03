@@ -14,8 +14,8 @@ public class Graph2EdgeWeightGraph {
 	
 	public static void main(String[] args) throws IOException {
 		
-		String input = "/home/gongsf/program/graphPartition/dataSet/WiKi/vertex.txt";
-		String output = "/home/gongsf/program/graphPartition/dataSet/WiKi/vertex_edge_weight.txt";
+		String input = "/home/gongsf/program/dynamicSchedule/dataSet/roadNet/vertex.txt";
+		String output = "/home/gongsf/program/dynamicSchedule/dataSet/roadNet/vertexEdgeWeight.txt";
 		
 		for(int i = 0; i < args.length; i++){
 			if(args[i].equals("-in")){

@@ -25,22 +25,32 @@ public class Format2MetisInput {
 			}
 		}
 
+		String line = null;
+		int edgeCount = 0;
+		int vertexCount = 0;
 		BufferedReader br = new BufferedReader(new FileReader(input));
+		while((line = br.readLine()) != null){
+			StringTokenizer st = new StringTokenizer(line);
+			edgeCount += (st.countTokens()-1);
+			vertexCount++;
+		}
+		br.close();
+		if(edgeCount % 2 != 0){
+			System.out.println("the graph is not undirected");
+		}
+		
 		BufferedWriter bw = new BufferedWriter(new FileWriter(output));
-
-		String line = br.readLine();
-		bw.write(line + "\n");
-//		bw.write(mode + "\n");
+		bw.write(vertexCount  + " " + edgeCount/2 + "\n");
+		
+		br = new BufferedReader(new FileReader(input));
 
 		while ((line = br.readLine()) != null) {
 			StringTokenizer st = new StringTokenizer(line);
 			st.nextToken(); //skip id
-			st.nextToken(); // skip weight
 			int id = 0;
 			while (st.hasMoreTokens()) {
 				id = Integer.parseInt(st.nextToken()) + 1;
 				bw.write(id + " ");
-				st.nextToken();// skip communication
 			}
 			bw.write("\n");
 		}

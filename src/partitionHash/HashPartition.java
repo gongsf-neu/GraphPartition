@@ -9,9 +9,21 @@ import java.io.IOException;
 public class HashPartition {
 	
 	public static void main(String[] args) throws IOException {
-		String input = "/home/gongsf/program/graphPartition/dataSet/Google_90w/original_data.txt";
-		String output = "/home/gongsf/program/graphPartition/dataSet/Google_90w/hash/part";
-		int partNum = 4;
+		String input = "";
+		String output = "";
+		int partNum = -1;
+		
+		for(int i = 0; i < args.length; i++){
+			if(args[i].equals("-in")){
+				input = args[++i];
+			}
+			if(args[i].equals("-out")){
+				output = args[++i];
+			}
+			if(args[i].equals("-partNum")){
+				partNum = Integer.parseInt(args[++i]);
+			}
+		}
 		
 		BufferedReader br = new BufferedReader(new FileReader(input));
 		
@@ -30,6 +42,8 @@ public class HashPartition {
 		for(int i = 0; i < partNum; i++){
 			bw[i].close();
 		}
+		
+		System.out.println("hash part finished");
 		
 	}
 

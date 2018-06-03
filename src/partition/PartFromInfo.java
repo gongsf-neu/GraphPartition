@@ -10,17 +10,13 @@ public class PartFromInfo {
 
 	public static void main(String[] args) throws IOException {
 
-		String method = "neighbor";
 		int partNum = 4;
-		String weightMethod = "InDeg";
 		//note whether the graph is weight graph
 
-		String partInfo = "/home/gongsf/program/graphPartition/dataSet/Google_90w/"
-				+ method + "/" + method + "_vertex_weight_" + weightMethod + "_partInfo." + partNum;
-		String originalData = "/home/gongsf/program/graphPartition/dataSet/Google_90w/"
-				+ "original_data.txt";
-		String output = "/home/gongsf/program/graphPartition/dataSet/Google_90w/"
-				+ method + "/" + method + "_vertex_weight_" + weightMethod + "_result/weight_no/vertex";
+		String partInfo = "";
+		String originalData = "";
+		String output = "";
+		
 
 		for(int i = 0; i < args.length; i++){
 			if(args[i].equals("-partInfo")){
@@ -35,6 +31,11 @@ public class PartFromInfo {
 			if(args[i].equals("-partNum")){
 				partNum = Integer.parseInt(args[++i]);
 			}
+		}
+		
+		if(partNum == -1){
+			System.out.println("partNum is error");
+			System.exit(0);
 		}
 		
 		BufferedReader brmo = new BufferedReader(new FileReader(partInfo));

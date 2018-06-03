@@ -107,12 +107,10 @@ public class Format2MaiterInput {
 		//note whether the graph is weight
 		boolean isWeight = false;
 
-		String input = "/home/gongsf/program/graphPartition/dataSet/Google_90w/"
-				+ method + "/" + method	+ "_vertex_weight_"	+ weightmethod	+ "_result/weight_no/vertex";
-		String output = "/home/gongsf/program/graphPartition/dataSet/Google_90w/"
-				+ method + "/" + method	+ "_vertex_weight_"	+ weightmethod	+ "_result/weight_no/part";
-		int partNum = 4;
-		int pointNum = 916428;
+		String input = "";
+		String output = "";
+		int partNum = -1;
+		int pointNum = -1;
 
 		for (int i = 0; i < args.length; i++) {
 			if (args[i].equals("-in")) {
@@ -144,6 +142,12 @@ public class Format2MaiterInput {
 				}
 			}
 		}
+		
+		if(partNum == -1 || pointNum == -1){
+			System.out.println("partNum or vertexNum is error");
+			System.exit(0);
+		}
+		
 		Format2MaiterInput format = new Format2MaiterInput(input, output,
 				partNum, pointNum);
 		if (isWeight) {
