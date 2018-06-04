@@ -6,12 +6,12 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.StringTokenizer;
 
-public class countContribution {
+public class CountContribution {
 	public static void main(String[] args) throws IOException {
-		String contributionInfo = "/home/gongsf/project/graphPartition/dataSet/Google/contribution_pagerank";
-		String partition = "/home/gongsf/project/graphPartition/dataSet/Google/metis/contribution_pagerank/weight_no/vertex";
+		String contributionInfo = "/home/gongsf/project/graphPartition/dataSet/BerkStan/contribution_pagerank";
+		String partition = "/home/gongsf/project/graphPartition/dataSet/BerkStan/metis/contribution_pagerank/weight_no/vertex";
 		
-		int vertexNum = 916428;
+		int vertexNum = 685230;
 		
 		double[] contribution = new double[vertexNum];
 		
