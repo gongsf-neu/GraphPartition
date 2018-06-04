@@ -30,7 +30,7 @@ public class CountEdgeCut {
 			System.out.println(sum);
 			brs[i].close();
 		}
-		System.out.println(total);
+		System.out.println("total:" + total);
 	}
 
 }
