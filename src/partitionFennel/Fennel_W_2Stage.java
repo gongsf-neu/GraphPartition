@@ -9,9 +9,12 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.StringTokenizer;
 
-public class Fennel_W {
+import util.WeightVertex;
+
+public class Fennel_W_2Stage {
 
 	public static void main(String[] args) throws IOException {
 
@@ -51,6 +54,7 @@ public class Fennel_W {
 		for (int i = 0; i < partNum; i++) {
 			parts[i] = new TIntHashSet();
 		}
+		WeightVertex[] vertices = new WeightVertex[vertexNum];
 
 		double contributionAll = 0;
 		double trafficAll = 0;
@@ -61,14 +65,20 @@ public class Fennel_W {
 		String[] s = line.split("\\s+");
 		vertexNum = Integer.parseInt(s[0]);
 		edgeNum = Integer.parseInt(s[1]);
-		while ((line = br.readLine()) != null) {
+		for (int i = 0; (line = br.readLine()) != null; i++) {
 			StringTokenizer st = new StringTokenizer(line);
-			st.nextToken();
-			contributionAll += Double.parseDouble(st.nextToken());
+			int id = Integer.parseInt(st.nextToken());
+			double weight = Double.parseDouble(st.nextToken());
+			contributionAll += weight;
+			TIntDoubleHashMap neighbor = new TIntDoubleHashMap();
+			double comm = 0;
 			while (st.hasMoreTokens()) {
-				st.nextToken();
-				trafficAll += Double.parseDouble(st.nextToken());
+				neighbor.put(Integer.parseInt(st.nextToken()),
+						comm = Double.parseDouble(st.nextToken()));
+				trafficAll += comm;
 			}
+			WeightVertex v = new WeightVertex(id, weight, neighbor);
+			vertices[i] = v;
 		}
 		br.close();
 		trafficAll /= 2;
@@ -77,32 +87,20 @@ public class Fennel_W {
 		double gamma = 1.5;
 		double alpha = Math.sqrt(partNum) * trafficAll
 				/ (Math.pow(contributionAll, gamma));
-		System.out.println("alpha : " + alpha);
-		double v = 1.1;
-		double miu = v * contributionAll / partNum;
-
-		br = new BufferedReader(new FileReader(input));
-		br.readLine();
-		for (int j = 0; (line = br.readLine()) != null; j++) {
-			TIntDoubleHashMap neighbor = new TIntDoubleHashMap();
-			StringTokenizer st = new StringTokenizer(line);
-			int id = Integer.parseInt(st.nextToken());
-			if (id != j) {
-				System.out.println(id + " " + j);
-				System.exit(0);
-			}
-			double ctbtion = Double.parseDouble(st.nextToken());
-			while (st.hasMoreTokens()) {
-				neighbor.put(Integer.parseInt(st.nextToken()),
-						Double.parseDouble(st.nextToken()));
-			}
-
+//		double v = 1.1;
+		double miu = 1.1 * contributionAll / partNum;
+		ArrayList<WeightVertex> top = new ArrayList<WeightVertex>();
+		ArrayList<WeightVertex> remain = new ArrayList<WeightVertex>();
+		Util.getUnstable(vertices, top, remain);
+		for (int j = 0; j < top.size(); j++) {
+			WeightVertex v = top.get(j);
+			TIntDoubleHashMap neighbor = v.neighbor;
 			double score = 0;
 			double maxScore = -Double.MAX_VALUE;
 			int maxPart = 0;
 			for (int i = 0; i < partNum; i++) {
 				if (contribution[i] <= miu) {
-					score = getScore(neighbor, parts[i], contribution[i], ctbtion,
+					score = getScore(neighbor, parts[i], contribution[i], v.weight,
 							alpha, gamma);
 					if (maxScore < score) {
 						maxScore = score;
@@ -112,11 +110,33 @@ public class Fennel_W {
 				// System.out.print(score + " ");
 			}
 			// System.out.println();
-			parts[maxPart].add(id);
-			contribution[maxPart] += ctbtion;
+			parts[maxPart].add(v.id);
+			contribution[maxPart] += v.weight;
 			partInfo[j] = maxPart;
 		}
-		br.close();
+		
+		for (int j = 0; j < remain.size(); j++) {
+			WeightVertex v = remain.get(j);
+			TIntDoubleHashMap neighbor = v.neighbor;
+			double score = 0;
+			double maxScore = -Double.MAX_VALUE;
+			int maxPart = 0;
+			for (int i = 0; i < partNum; i++) {
+				if (contribution[i] <= miu) {
+					score = getScore(neighbor, parts[i], contribution[i], v.weight,
+							alpha, gamma);
+					if (maxScore < score) {
+						maxScore = score;
+						maxPart = i;
+					}
+				}
+				// System.out.print(score + " ");
+			}
+			// System.out.println();
+			parts[maxPart].add(v.id);
+			contribution[maxPart] += v.weight;
+			partInfo[j] = maxPart;
+		}
 
 		BufferedWriter bw = new BufferedWriter(new FileWriter(output));
 		for (int i = 0; i < vertexNum; i++) {
@@ -130,7 +150,7 @@ public class Fennel_W {
 	}
 
 	public static double getScore(TIntDoubleHashMap neighbor,
-			TIntHashSet partition, double partCtbtion, double ctbtion, double alpha,
+			TIntHashSet partition, double partcont, double cont, double alpha,
 			double gamma) {
 		double score = 0;
 		TIntDoubleIterator itr = neighbor.iterator();
@@ -143,9 +163,10 @@ public class Fennel_W {
 		}
 
 		double deltaC = alpha
-				* (Math.pow(partCtbtion + ctbtion, gamma) - Math.pow(partCtbtion, gamma));
+				* (Math.pow(partcont + cont, gamma) - Math.pow(partcont, gamma));
 
 		return score - deltaC;
 
 	}
+
 }

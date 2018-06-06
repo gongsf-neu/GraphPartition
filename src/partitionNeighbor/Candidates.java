@@ -1,6 +1,7 @@
 package partitionNeighbor;
 
 import java.util.HashSet;
+import java.util.List;
 
 import gnu.trove.iterator.TIntDoubleIterator;
 import gnu.trove.map.hash.TIntObjectHashMap;
@@ -88,6 +89,7 @@ public class Candidates {
 		}
 		return node.id;
 	}
+	
 
 	private void adjust(Node node) {
 
