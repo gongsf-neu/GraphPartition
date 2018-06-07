@@ -28,8 +28,8 @@ public class NeighborPartition {
 
 		int vertexNum = 916428;
 		int partNum = 4;
-		int[] partInfo;
-		WeightVertex[] vertices;
+		
+		
 		double allCon = 0; // all the contribution of all vertices
 		double averageCon = 0; // average contribution for each partition
 
@@ -52,9 +52,9 @@ public class NeighborPartition {
 			}
 		}
 
-		partInfo = new int[vertexNum];
-		vertices = new WeightVertex[vertexNum];
-		output = output + "." + partNum;
+		int[] partInfo = new int[vertexNum];
+		WeightVertex[] vertices = new WeightVertex[vertexNum];
+		output = output + ".part." + partNum;
 
 		BufferedReader br = new BufferedReader(new FileReader(input));
 		String line = null;
