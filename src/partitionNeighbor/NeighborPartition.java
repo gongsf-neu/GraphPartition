@@ -19,15 +19,12 @@ public class NeighborPartition {
 	public static void main(String[] args) throws IOException {
 
 		// contribution and communication file
-		String input = "/home/gongsf/program/graphPartition/dataSet/Google_90w/"
-				+ "vertex_weight_InDeg.txt";
+		String input = "";
 
 		// part information
-		String output = "/home/gongsf/program/graphPartition/dataSet/Google_90w/"
-				+ "neighbor/neighbor_vertex_weight_InDeg_partInfo";
+		String output = "";
 
-		int vertexNum = 916428;
-		int partNum = 4;
+		int partNum = -1;
 		
 		
 		double allCon = 0; // all the contribution of all vertices
@@ -43,17 +40,12 @@ public class NeighborPartition {
 				output = args[++i];
 			}
 
-			if (args[i].equals("-vertexNum")) {
-				vertexNum = Integer.parseInt(args[++i]);
-			}
-
 			if (args[i].equals("-partNum")) {
 				partNum = Integer.parseInt(args[++i]);
 			}
 		}
 
-		int[] partInfo = new int[vertexNum];
-		WeightVertex[] vertices = new WeightVertex[vertexNum];
+		
 		output = output + ".part." + partNum;
 
 		BufferedReader br = new BufferedReader(new FileReader(input));
@@ -66,7 +58,9 @@ public class NeighborPartition {
 		// the first line contains [vertexNum] [edgeNum]
 		line = br.readLine();
 		String[] s = line.split("\\s+");
-		vertexNum = Integer.parseInt(s[0]);
+		int vertexNum = Integer.parseInt(s[0]);
+		int[] partInfo = new int[vertexNum];
+		WeightVertex[] vertices = new WeightVertex[vertexNum];
 		int maxId = 0;
 		double maxCon = 0;
 		for (int i = 0; (line = br.readLine()) != null; i++) {

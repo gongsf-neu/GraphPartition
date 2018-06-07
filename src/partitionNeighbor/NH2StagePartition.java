@@ -19,18 +19,13 @@ public class NH2StagePartition {
 	public static void main(String[] args) throws IOException {
 
 		// contribution and communication file
-		String input = "/home/gongsf/program/graphPartition/dataSet/Google/"
-				+ "vertex_contribution_Indeglog_deep_2.txt";
+		String input = "";
 
 		// part information
-		String output = "/home/gongsf/program/graphPartition/dataSet/Google/"
-				+ "vertex_contribution_Indeglog_deep_2.txt.part.4";
+		String output = "";
 
-		int vertexNum = 916428;
-		int partNum = 4;
-		int[] partInfo;
-		double[] contribution;
-		WeightVertex[] vertices;
+		int partNum = -1;
+		double rate = -1;
 
 		for (int i = 0; i < args.length; i++) {
 
@@ -42,18 +37,14 @@ public class NH2StagePartition {
 				output = args[++i];
 			}
 
-			if (args[i].equals("-vertexNum")) {
-				vertexNum = Integer.parseInt(args[++i]);
-			}
-
 			if (args[i].equals("-partNum")) {
 				partNum = Integer.parseInt(args[++i]);
 			}
+			
+			if(args[i].equals("-rate")){
+				rate = Double.parseDouble(args[++i]);
+			}
 		}
-
-		partInfo = new int[vertexNum];
-		contribution = new double[partNum];
-		vertices = new WeightVertex[vertexNum];
 		output = output + "." + partNum;
 		TIntHashSet[] parts = new TIntHashSet[partNum];
 		for (int i = 0; i < partNum; i++) {
@@ -73,7 +64,12 @@ public class NH2StagePartition {
 		// the first line contains [vertexNum] [edgeNum]
 		line = br.readLine();
 		String[] s = line.split("\\s+");
-		vertexNum = Integer.parseInt(s[0]);
+		int vertexNum = Integer.parseInt(s[0]);
+		
+		int[] partInfo = new int[vertexNum];
+		double[] contribution = new double[partNum];
+		WeightVertex[] vertices = new WeightVertex[vertexNum];
+		
 		for (int i = 0; (line = br.readLine()) != null; i++) {
 			commCount = 0;
 			StringTokenizer st = new StringTokenizer(line);
@@ -102,7 +98,7 @@ public class NH2StagePartition {
 
 		List<WeightVertex> top = new ArrayList<WeightVertex>();
 		List<WeightVertex> remain = new ArrayList<WeightVertex>();
-		HashSet<Integer> topIdSet = Util.getUnstable(vertices, top, remain);
+		HashSet<Integer> topIdSet = Util.getUnstable(vertices, top, remain, rate);
 		assignHardStable(topIdSet, top, vertices, partNum, partInfo,
 				contribution, parts);
 		assignEasyStable(remain, contribution, parts, partInfo, miu,

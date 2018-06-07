@@ -26,7 +26,7 @@ import util.WeightVertex;
 public class Util {
 
 	public static HashSet<Integer> getUnstable(WeightVertex[] vertices,
-			List<WeightVertex> top, List<WeightVertex> remain) {
+			List<WeightVertex> top, List<WeightVertex> remain, double rate) {
 
 		int sampleNum = 2000;
 		WeightVertex[] samples = new WeightVertex[sampleNum];
@@ -43,7 +43,7 @@ public class Util {
 		
 		Arrays.sort(samples, new Util().new MyCompartor());
 		HashSet<Integer> set = new HashSet<Integer>();
-		int index = (int) (0.1 * sampleNum);
+		int index = (int) (rate * sampleNum);
 		double bound = samples[index].weight;
 		System.out.println(samples[0].weight + " " + bound);
 		for(WeightVertex v : vertices){

@@ -23,9 +23,8 @@ public class Fennel_W_2Stage {
 
 		int edgeNum = 0;
 		int vertexNum = 0;
-		int[] partInfo;
-		double[] contribution;
 		int partNum = -1;
+		double rate = -1;
 
 		for (int i = 0; i < args.length; i++) {
 			if (args[i].equals("-in")) {
@@ -39,6 +38,10 @@ public class Fennel_W_2Stage {
 			if (args[i].equals("-partNum")) {
 				partNum = Integer.parseInt(args[++i]);
 			}
+			
+			if(args[i].equals("-rate")){
+				rate = Double.parseDouble(args[++i]);
+			}
 		}
 
 		if (partNum == -1) {
@@ -46,6 +49,8 @@ public class Fennel_W_2Stage {
 			System.exit(0);
 		}
 
+		int[] partInfo;
+		double[] contribution;
 		long startTime = System.currentTimeMillis();
 
 		output += "." + partNum;
@@ -91,7 +96,7 @@ public class Fennel_W_2Stage {
 		double miu = 1.1 * contributionAll / partNum;
 		ArrayList<WeightVertex> top = new ArrayList<WeightVertex>();
 		ArrayList<WeightVertex> remain = new ArrayList<WeightVertex>();
-		Util.getUnstable(vertices, top, remain);
+		Util.getUnstable(vertices, top, remain, rate);
 		for (int j = 0; j < top.size(); j++) {
 			WeightVertex v = top.get(j);
 			TIntDoubleHashMap neighbor = v.neighbor;
